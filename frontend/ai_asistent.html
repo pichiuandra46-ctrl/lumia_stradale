@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumia AI Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --rosu-lumia: #B71C1C; 
+            --antracit: #121212; 
+            --ai-gradient: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            --fundal-chat: #f4f7f6;
+        }
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: #f0f0f0; 
+            margin: 0; 
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            background-color: var(--fundal-chat);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        /* Header Chat */
+        .chat-header {
+            background: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .back-btn { text-decoration: none; color: var(--antracit); font-size: 20px; }
+        
+        .ai-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--ai-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .status-info h3 { margin: 0; font-size: 14px; color: var(--antracit); }
+        .status-info span { font-size: 11px; color: #4caf50; font-weight: 600; }
+
+        /* Zona de mesaje */
+        .chat-messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .message.bot {
+            background: white;
+            color: var(--antracit);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .message.user {
+            background: var(--ai-gradient);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        /* Input zona */
+        .chat-input-area {
+            background: white;
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            border-top: 1px solid #eee;
+        }
+
+        .chat-input {
+            flex-grow: 1;
+            border: 1px solid #eee;
+            background: #f9f9f9;
+            padding: 12px 15px;
+            border-radius: 25px;
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .send-btn {
+            background: var(--ai-gradient);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .quick-tags {
+            padding: 0 20px 10px;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+        }
+
+        .tag {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            white-space: nowrap;
+            color: #666;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="chat-header">
+        <a href="contul_meu.html" class="back-btn">←</a>
+        <div class="ai-avatar">✨</div>
+        <div class="status-info">
+            <h3>Lumia Stradale AI Assistant</h3>
+            <span>Online și gata să ajute</span>
+        </div>
+    </div>
+
+    <div class="chat-messages" id="chat-box">
+        <div class="message bot">
+            Salut👋 Sunt asistentul tău Lumia Stradale. Dacă ceva nu a fost pe placul tău sau ai o întrebare despre comanda ta, sunt aici să te ascult.
+        </div>
+        <div class="message bot">
+            Cu ce te pot ajuta astăzi?
+        </div>
+    </div>
+
+    <div class="quick-tags">
+        <div class="tag" onclick="quickMessage('Pizza a ajuns rece')">❄️ Pizza rece</div>
+        <div class="tag" onclick="quickMessage('Întârziere comandă')">⏳ Întârziere</div>
+        <div class="tag" onclick="quickMessage('Recomandă-mi ceva bun')">🍕 Recomandări</div>
+    </div>
+
+    <div class="chat-input-area">
+        <input type="text" class="chat-input" id="user-input" placeholder="Scrie mesajul tău aici...">
+        <button class="send-btn" onclick="sendMessage()">➤</button>
+    </div>
+</div>
+
+<script>
+    function sendMessage() {
+        const input = document.getElementById('user-input');
+        const chatBox = document.getElementById('chat-box');
+        
+        if (input.value.trim() === "") return;
+
+        // Mesajul utilizatorului
+        const userDiv = document.createElement('div');
+        userDiv.className = 'message user';
+        userDiv.innerText = input.value;
+        chatBox.appendChild(userDiv);
+
+        const currentMsg = input.value.toLowerCase();
+        input.value = "";
+
+        // Scroll la final
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        // Răspuns simulat Bot
+        setTimeout(() => {
+            const botDiv = document.createElement('div');
+            botDiv.className = 'message bot';
+            
+            if(currentMsg.includes("rece") || currentMsg.includes("nu e ok")) {
+                botDiv.innerText = "Îmi pare rău să aud asta! 😔 Am trimis sesizarea ta direct către echipa de la rulotă. Un coleg te va contacta în cel mai scurt timp pentru a remedia situația.";
+            } else if(currentMsg.includes("recomanda")) {
+                botDiv.innerText = "Astăzi se coace o Pizza Diavola excelentă! 🌶️ Fiindcă ești client fidel, am văzut că data trecută ți-a plăcut Carnivora, deci sigur o să-ți placă.";
+            } else {
+                botDiv.innerText = "Am recepționat mesajul tău. Analizez imediat și revin cu un răspuns! ✨";
+            }
+            
+            chatBox.appendChild(botDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }, 1000);
+    }
+
+    function quickMessage(text) {
+        document.getElementById('user-input').value = text;
+        sendMessage();
+    }
+</script>
+
+</body>
+</html>

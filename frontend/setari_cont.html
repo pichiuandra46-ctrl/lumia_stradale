@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setări cont - Lumia Stradale</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --rosu-lumia: #B71C1C; 
+            --antracit: #121212; 
+            --fundal: #F9F9F9;
+        }
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: #f0f0f0; 
+            margin: 0; 
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            background-color: var(--fundal);
+            min-height: 100vh;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        .nav-red {
+            background-color: var(--rosu-lumia);
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .back-arrow { color: white; text-decoration: none; font-size: 22px; position: absolute; left: 20px; }
+        .nav-title { color: white; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin: 0 auto; }
+
+        .content { padding: 30px 20px; }
+
+        .profile-pic-center {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+        .avatar-large {
+            width: 90px;
+            height: 90px;
+            background: white;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            border: 1px solid #eee;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            color: var(--rosu-lumia);
+        }
+
+        .settings-card {
+            background: white;
+            padding: 25px 20px;
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+            border: 1px solid #eee;
+        }
+
+        .input-group { margin-bottom: 20px; }
+
+        label { 
+            display: block; 
+            font-size: 10px; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            color: #999; 
+            margin-bottom: 8px; 
+            margin-left: 5px;
+            letter-spacing: 0.5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px solid #eee;
+            background: #fdfdfd;
+            font-family: inherit;
+            font-size: 14px;
+            box-sizing: border-box;
+            color: var(--antracit);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--rosu-lumia);
+        }
+
+        .birth-info {
+            font-size: 10px;
+            color: #888;
+            margin-top: -15px;
+            margin-bottom: 20px;
+            margin-left: 5px;
+            font-style: italic;
+        }
+
+        .btn-save {
+            background: var(--antracit);
+            color: white;
+            width: 100%;
+            border: none;
+            padding: 18px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-save:active { transform: scale(0.97); }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <nav class="nav-red">
+        <a href="contul_meu.html" class="back-arrow">←</a>
+        <span class="nav-title">SETĂRI CONT</span>
+    </nav>
+
+    <div class="content">
+        <div class="profile-pic-center">
+            <div class="avatar-large">👤</div>
+            <p style="font-size: 12px; color: var(--rosu-lumia); margin-top: 10px; font-weight: 600;">Schimbă poza</p>
+        </div>
+
+        <div class="settings-card">
+            <form onsubmit="event.preventDefault(); alert('Modificările au fost salvate cu succes! 🍕'); window.location.href='contul_meu.html';">
+                
+                <div class="input-group">
+                    <label>Nume Prenume</label>
+                    <input type="text" id="set-name" placeholder="Numele tău complet" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Număr de Telefon</label>
+                    <input type="tel" id="set-phone" readonly style="background: #f5f5f5; color: #888;">
+                </div>
+
+                <div class="input-group">
+                    <label>Adresă Email</label>
+                    <input type="email" id="set-email" placeholder="email@gmail.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Data Nașterii</label>
+                    <input type="date" id="set-date">
+                </div>
+                <p class="birth-info">Îți trimitem un cadou surpriză de ziua ta!</p>
+
+                <button type="submit" class="btn-save">SALVEAZĂ MODIFICĂRILE</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.onload = () => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            if (user.name) document.getElementById('set-name').value = user.name;
+            if (user.phone) document.getElementById('set-phone').value = user.phone;
+            if (user.email) document.getElementById('set-email').value = user.email;
+            
+            // Dacă data de naștere a fost salvată în baza de date, o completăm (altfel punem o valoare standard)
+            document.getElementById('set-date').value = user.birthDate || "2004-12-26";
+        }
+    };
+</script>
+</body>
+</html>

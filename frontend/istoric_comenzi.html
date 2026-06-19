@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comenzile mele - Lumia Stradale</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --rosu-lumia: #B71C1C; 
+            --antracit: #121212; 
+            --fundal-gri: #F9F9F9;
+            --verde-status: #2E7D32;
+        }
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: #f0f0f0; 
+            margin: 0; 
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            background-color: var(--fundal-gri);
+            min-height: 100vh;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        .nav-red {
+            background-color: var(--rosu-lumia);
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .back-arrow {
+            color: white;
+            text-decoration: none;
+            font-size: 22px;
+            position: absolute;
+            left: 20px;
+        }
+
+        .nav-title {
+            color: white;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0 auto;
+        }
+
+        .content { padding: 20px 15px; }
+
+        .section-intro {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--antracit);
+            padding-left: 5px;
+        }
+
+        #orders-holder { width: 100%; }
+
+        .order-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid #eee;
+        }
+
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 10px;
+        }
+
+        .order-date { font-size: 13px; font-weight: 600; color: var(--antracit); }
+        .order-id { font-size: 11px; color: #999; display: block; margin-top: 2px; }
+
+        .status-badge {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 5px 10px;
+            border-radius: 12px;
+            text-transform: uppercase;
+        }
+        .status-done { background: #E8F5E9; color: var(--verde-status); }
+
+        .order-items {
+            font-size: 13px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .order-items span { display: block; }
+
+        .order-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-label { font-size: 12px; color: #888; }
+        .total-amount { font-size: 16px; font-weight: 700; color: var(--antracit); }
+
+        .btn-reorder {
+            background: transparent;
+            border: 1px solid var(--rosu-lumia);
+            color: var(--rosu-lumia);
+            padding: 8px 15px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .btn-reorder:active { background: var(--rosu-lumia); color: white; }
+
+        .no-orders {
+            text-align: center;
+            padding: 60px 20px;
+            color: #777;
+        }
+        .no-orders-icon { font-size: 56px; margin-bottom: 15px; }
+        .no-orders p { margin: 0 0 20px 0; font-size: 14px; font-weight: 500; }
+
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <nav class="nav-red">
+        <a href="contul_meu.html" class="back-arrow">←</a>
+        <span class="nav-title">ISTORIC COMENZI</span>
+    </nav>
+
+    <div class="content">
+        <h2 class="section-intro">Ultimele tale pofte 🍕</h2>
+
+        <div id="orders-holder"></div>
+    </div>
+</div>
+
+<script>
+    window.onload = () => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const holder = document.getElementById('orders-holder');
+        
+        // Preluăm strict array-ul de comenzi al utilizatorului conectat (dacă nu există, inițializăm un array gol)
+        let comenzi = (user && user.orders) ? user.orders : [];
+
+        // Dacă utilizatorul nu a efectuat nicio comandă din meniu.html, afișăm ecranul gol corespunzător
+        if (comenzi.length === 0) {
+            holder.innerHTML = `
+                <div class="no-orders">
+                    <div class="no-orders-icon">🍕</div>
+                    <p>Nu ai nicio comandă înregistrată încă.</p>
+                    <a href="meniu.html" class="btn-reorder" style="display: inline-block;">Comandă acum</a>
+                </div>`;
+            return;
+        }
+
+        // Dacă există comenzi reale, le mapăm și le afișăm cronologic (cele mai noi primele)
+        let htmlConstruct = "";
+        
+        // Inversăm vectorul pentru a vedea ultima comandă plasată în partea de sus
+        const comenziInversate = [...comenzi].reverse();
+
+        comenziInversate.forEach(comanda => {
+            let produseHTML = "";
+            // Verificăm dacă produsele sunt stocate ca array sau text simplu splituit
+            const listaProduse = Array.isArray(comanda.produse) ? comanda.produse : [comanda.produse];
+            
+            listaProduse.forEach(prod => {
+                produseHTML += `<span>${prod}</span>`;
+            });
+
+            htmlConstruct += `
+                <div class="order-card">
+                    <div class="order-header">
+                        <div>
+                            <span class="order-date">${comanda.data || 'Recentă'}</span>
+                            <span class="order-id">Comanda #${comanda.id || Math.floor(1000 + Math.random() * 9000)}</span>
+                        </div>
+                        <span class="status-badge status-done">${comanda.statusText || 'Preluată'}</span>
+                    </div>
+                    <div class="order-items">
+                        ${produseHTML}
+                    </div>
+                    <div class="order-footer">
+                        <div>
+                            <span class="total-label">Total:</span>
+                            <span class="total-amount">${comanda.total}</span>
+                        </div>
+                        <a href="meniu.html" class="btn-reorder">Repetă comanda</a>
+                    </div>
+                </div>
+            `;
+        });
+
+        holder.innerHTML = htmlConstruct;
+    };
+</script>
+</body>
+</html>

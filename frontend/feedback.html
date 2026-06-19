@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback - Lumia Stradale</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --rosu-lumia: #B71C1C; 
+            --antracit: #121212; 
+            --fundal: #F9F9F9;
+            --auriu: #C5A059;
+        }
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: #f0f0f0; 
+            margin: 0; 
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            background-color: var(--fundal);
+            min-height: 100vh;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        .nav-red {
+            background-color: var(--rosu-lumia);
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .back-arrow { color: white; text-decoration: none; font-size: 22px; position: absolute; left: 20px; }
+        .nav-title { color: white; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin: 0 auto; }
+
+        .content { padding: 30px 20px; }
+
+        .section-header { text-align: center; margin-bottom: 30px; }
+        .section-header h2 { font-family: 'Playfair Display', serif; margin: 0; font-size: 24px; color: var(--antracit); }
+        .section-header p { font-size: 13px; color: #666; margin-top: 10px; }
+
+        /* Stil Formular */
+        .feedback-card {
+            background: white;
+            padding: 25px 20px;
+            border-radius: 25px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+            border: 1px solid #eee;
+        }
+
+        label { 
+            display: block; 
+            font-size: 10px; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            color: #999; 
+            margin-bottom: 8px; 
+            margin-left: 5px;
+        }
+
+        select, textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 15px;
+            border: 1px solid #eee;
+            background: #fdfdfd;
+            font-family: inherit;
+            font-size: 14px;
+            box-sizing: border-box;
+            margin-bottom: 25px;
+        }
+
+        /* Sistem Stele */
+        .stars-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+            direction: rtl; /* Pentru a facilita selectarea cu CSS */
+        }
+
+        .stars-container input { display: none; }
+        .stars-container label {
+            font-size: 35px;
+            color: #ddd;
+            cursor: pointer;
+            transition: color 0.2s;
+            margin: 0;
+        }
+
+        .stars-container label:hover,
+        .stars-container label:hover ~ label,
+        .stars-container input:checked ~ label {
+            color: var(--auriu);
+        }
+
+        .btn-submit {
+            background: var(--antracit);
+            color: white;
+            width: 100%;
+            border: none;
+            padding: 18px;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-submit:active { transform: scale(0.97); }
+
+        .bonus-notice {
+            margin-top: 20px;
+            font-size: 11px;
+            color: var(--verde-status);
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            color: #2E7D32;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <nav class="nav-red">
+        <a href="contul_meu.html" class="back-arrow">←</a>
+        <span class="nav-title">FEEDBACK</span>
+    </nav>
+
+    <div class="content">
+        <div class="section-header">
+            <h2>Cum a fost pizza?</h2>
+            <p>Părerea ta contează enorm pentru noi. Ajută-ne să fim mai buni!</p>
+        </div>
+
+        <div class="feedback-card">
+            <form onsubmit="event.preventDefault(); alert('Mulțumim pentru feedback! Am adăugat 5 puncte bonus în contul tău.'); window.location.href='contul-meu.html';">
+                
+                <label>Alege comanda vizată</label>
+                <select required>
+                    <option value="" disabled selected>Selectează o comandă...</option>
+                    <option>Comanda #4421 (20 Aprilie)</option>
+                    <option>Comanda #4310 (12 Aprilie)</option>
+                    <option>Altă experiență</option>
+                </select>
+
+                <label>Cât de mult ți-a plăcut?</label>
+                <div class="stars-container">
+                    <input type="radio" name="star" id="star5" value="5"><label for="star5">★</label>
+                    <input type="radio" name="star" id="star4" value="4"><label for="star4">★</label>
+                    <input type="radio" name="star" id="star3" value="3"><label for="star3">★</label>
+                    <input type="radio" name="star" id="star2" value="2"><label for="star2">★</label>
+                    <input type="radio" name="star" id="star1" value="1"><label for="star1">★</label>
+                </div>
+
+                <label>Mesajul tău (opțional)</label>
+                <textarea rows="4" placeholder="Spune-ne ce ți-a plăcut sau ce putem îmbunătăți..."></textarea>
+
+                <button type="submit" class="btn-submit">TRIMITE FEEDBACK</button>
+                
+                <div class="bonus-notice">
+                    ✨ Primești <b>5 puncte loialitate</b> pentru feedback!
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,70 @@
+/* Resetare generală - ștergem marginile implicite ale browserului */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Fundalul paginii (pe laptop va fi un gri-crem deschis în spatele aplicației) */
+body {
+    background-color: #EFECE6;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+}
+
+/* CONTAINERUL RESPONSIVE (Telefon vs Laptop) */
+.app-container {
+    width: 100%;
+    max-width: 450px; /* Blochează lățimea pe laptop ca să simuleze un telefon */
+    background-color: #FDFBF7; /* Albul-crem din pozele tale */
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Stiluri specifice pentru ecrane mari (Laptop/PC) */
+@media (min-width: 451px) {
+    body {
+        align-items: center; /* Centrează „telefonul” pe mijlocul ecranului de laptop */
+    }
+    .app-container {
+        min-height: 85vh;
+        border-radius: 30px; /* Îi face colțurile rotunjite ca un ecran de smartphone */
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.08); /* Adaugă o umbră fină în jur */
+        margin: 20px 0;
+    }
+}
+
+/* --- Elemente reutilizabile pentru ecrane --- */
+.brand-title {
+    color: #A71D1D; /* Roșul-burgund specific Lumia Stradale */
+    text-align: center;
+    font-size: 28px;
+    margin: 30px 0;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Butonul general stilizat */
+.btn-main {
+    width: 100%;
+    background-color: #A71D1D;
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-main:hover {
+    background-color: #861616;
+}

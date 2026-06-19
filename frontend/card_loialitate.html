@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card client - Lumia Stradale</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --rosu-lumia: #B71C1C; 
+            --antracit: #121212; 
+            --auriu: #C5A059;
+            --fundal: #F9F9F9;
+        }
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: #f0f0f0; 
+            margin: 0; 
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            background-color: var(--fundal);
+            min-height: 100vh;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        .nav-red {
+            background-color: var(--rosu-lumia);
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .back-arrow { color: white; text-decoration: none; font-size: 22px; position: absolute; left: 20px; }
+        .nav-title { color: white; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin: 0 auto; }
+
+        .content { padding: 25px 20px; text-align: center; }
+
+        .virtual-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            border-radius: 25px;
+            padding: 30px 20px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+        }
+
+        .card-logo { font-family: 'Playfair Display', serif; font-size: 18px; margin-bottom: 20px; display: block; }
+        
+        .qr-container {
+            background: white;
+            padding: 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .qr-placeholder { width: 150px; height: 150px; background: #000; display: block; border-radius: 5px; }
+
+        .card-number { font-family: monospace; letter-spacing: 3px; font-size: 14px; opacity: 0.7; margin-top: 10px; display: block; }
+
+        .points-status {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .points-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .points-count { font-size: 24px; font-weight: 700; color: var(--antracit); }
+        .points-label { font-size: 12px; color: #888; text-transform: uppercase; }
+
+        .progress-bar-bg { background: #eee; height: 8px; border-radius: 10px; position: relative; margin-bottom: 10px; }
+        .progress-fill { background: var(--auriu); width: 0%; height: 100%; border-radius: 10px; transition: width 0.5s ease; }
+
+        .next-reward { font-size: 11px; color: #666; font-style: italic; }
+
+        .benefits-list { text-align: left; margin-top: 30px; }
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #eee;
+        }
+        .benefit-icon { font-size: 24px; }
+        .benefit-info h4 { margin: 0; font-size: 14px; color: var(--antracit); }
+        .benefit-info p { margin: 0; font-size: 11px; color: #888; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <nav class="nav-red">
+        <a href="contul_meu.html" class="back-arrow">←</a>
+        <span class="nav-title">Card Loialitate</span>
+    </nav>
+
+    <div class="content">
+        <div class="virtual-card">
+            <span class="card-logo">Lumia Stradale</span>
+            <div class="qr-container">
+                <img id="dyn-qr" src="" alt="QR Code" class="qr-placeholder">
+            </div>
+            <span id="dyn-card-id" class="card-number">LUM 0000 0000</span>
+            <p style="font-size: 10px; margin-top: 15px; opacity: 0.6;">Arată codul la rulotă pentru a aduna puncte</p>
+        </div>
+
+        <div class="points-status">
+            <div class="points-header">
+                <div>
+                    <span class="points-label">Soldul tău</span>
+                    <div id="dyn-card-points" class="points-count">0 Puncte</div>
+                </div>
+                <div style="font-size: 30px;">✨</div>
+            </div>
+            
+            <div class="progress-bar-bg">
+                <div id="dyn-progress" class="progress-fill"></div>
+            </div>
+            <p id="dyn-voucher-text" class="next-reward">Mai ai nevoie de puncte pentru un voucher.</p>
+        </div>
+
+        <div class="benefits-list">
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 18px;">Beneficiile tale</h3>
+            
+            <div class="benefit-item">
+                <span class="benefit-icon">🍕</span>
+                <div class="benefit-info">
+                    <h4>Regula 1:1</h4>
+                    <p>Fiecare leu cheltuit îți aduce 1 punct în cont.</p>
+                </div>
+            </div>
+
+            <div class="benefit-item">
+                <span class="benefit-icon">🎂</span>
+                <div class="benefit-info">
+                    <h4>Cadou de ziua ta</h4>
+                    <p>O pizza Margherita din partea casei de ziua ta.</p>
+                </div>
+            </div>
+
+            <div class="benefit-item">
+                <span class="benefit-icon">🔥</span>
+                <div class="benefit-info">
+                    <h4>Acces Prioritar</h4>
+                    <p>Afli primul despre noile ediții limitate de pizza.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.onload = () => {
+        let user = JSON.parse(localStorage.getItem('user')) || { name: 'Client Lumia', points: 0, id: 'LUM-0000' };
+        
+        // --- MECANISM DE SIGURANȚĂ ---
+        // Resetează automat punctele la 0 dacă valoarea este cea veche (173)
+        if (user.points === 173) {
+            user.points = 0;
+            localStorage.setItem('user', JSON.stringify(user));
+        }
+
+        const puncte = parseInt(user.points) || 0;
+        const nume = user.name || 'Client';
+        const idCont = user.id || 'LUM-0000';
+
+        document.getElementById('dyn-card-points').innerText = puncte + " Puncte";
+        document.getElementById('dyn-qr').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=LUMIA-${encodeURIComponent(nume)}-${puncte}`;
+        document.getElementById('dyn-card-id').innerText = idCont.replace('-', ' ');
+
+        let procentaj = (puncte / 250) * 100;
+        if (procentaj > 100) procentaj = 100;
+        document.getElementById('dyn-progress').style.width = procentaj + "%";
+
+        if (puncte < 250) {
+            const rest = 250 - puncte;
+            document.getElementById('dyn-voucher-text').innerHTML = `Mai ai nevoie de <b>${rest} puncte</b> pentru un Voucher de 15 RON`;
+        } else {
+            document.getElementById('dyn-voucher-text').innerHTML = `🎉 Felicitări! Ai deblocat un <b>Voucher de 15 RON</b>!`;
+        }
+    };
+</script>
+</body>
+</html>

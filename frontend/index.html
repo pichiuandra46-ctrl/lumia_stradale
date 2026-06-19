@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <script>
+    // Verificăm dacă există datele utilizatorului în memoria browserului (localStorage)
+    const user = localStorage.getItem('user');
+    
+    // Dacă NU este logat, îl redirecționăm instant către pagina de autentificare
+    if (!user) {
+        window.location.href = 'autentificare.html';
+    }
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumia Stradale - Pizza Napoletană</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --fundal-gri: #EBEBEB;
+            --fundal-alb: #FFFFFF;
+            --rosu-lumia: #B01E22;
+            --negru-butoane: #1A1A1A;
+            --mov-profil: #4B367C;
+            --roz-status: #FCEAEA;
+            --auriu-text: #B7965F;
+        }
+
+        body { font-family: 'Poppins', sans-serif; background-color: var(--fundal-gri); margin: 0; display: flex; justify-content: center; }
+        
+        .app-container { width: 100%; max-width: 450px; background-color: var(--fundal-gri); min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* HEADER: Fundal gri */
+        header { padding: 20px; text-align: center; position: relative; background-color: var(--fundal-gri); }
+        
+        .top-icons { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        
+        /* Cerc pentru iconițe - similar cu image_08aa43.png */
+        .icon-circle { 
+            width: 50px; height: 50px; background: white; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 22px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .brand-title { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--rosu-lumia); margin: 0; }
+        .location-text { font-size: 13px; color: var(--auriu-text); font-weight: 600; margin-top: 5px; }
+        
+        .status-area { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 15px; }
+        .status-banner { padding: 8px 20px; border-radius: 50px; font-size: 12px; font-weight: 700; color: var(--rosu-lumia); background: var(--roz-status); }
+        
+        /* Clepsidra in cerc */
+        .stock-wrapper { 
+            cursor: pointer; position: relative; display: flex; flex-direction: column; align-items: center; 
+            background: white; padding: 10px; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 30px; height: 30px; justify-content: center;
+        }
+        .status-led { width: 8px; height: 8px; border-radius: 50%; background: #2E7D32; margin-top: 2px; }
+        .stock-tooltip { display: none; position: absolute; top: 60px; background: #333; color: white; padding: 6px 10px; border-radius: 8px; font-size: 10px; z-index: 10; white-space: nowrap; }
+
+        /* CONȚINUT: Linie dreaptă, fundal alb */
+        .content-area {
+            background-color: var(--fundal-alb);
+            padding: 30px 20px;
+            flex-grow: 1;
+        }
+
+        .story-section { text-align: center; font-size: 14px; line-height: 1.6; font-style: italic; color: #444; margin-bottom: 20px; }
+
+        .action-buttons { display: flex; flex-direction: column; gap: 12px; padding: 0 10px 20px; }
+        .btn { padding: 16px; border-radius: 12px; border: none; font-weight: 600; cursor: pointer; text-decoration: none; text-align: center; color: white; }
+        .btn-call { background: var(--negru-butoane); }
+        .btn-menu { background: var(--rosu-lumia); }
+
+        .hero-image { width: 100%; margin-top: 10px; border-radius: 0; height: 180px; object-fit: cover; }
+        
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+        .pulse-active { animation: pulse 1.5s infinite; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <header>
+        <div class="top-icons">
+            <div class="icon-circle" onclick="window.location.href='contul_meu.html'">👤</div>
+            <div class="stock-wrapper" onclick="showStockMsg()">
+                <span id="hg-icon" class="hg-icon">⏳</span>
+                <div id="hg-led" class="status-led"></div>
+                <div id="hg-tooltip" class="stock-tooltip">Avem stoc proaspăt! ✅</div>
+            </div>
+            <div class="icon-circle" onclick="window.location.href='evenimente.html'">📅</div>
+        </div>
+        
+        <h1 class="brand-title">Lumia Stradale 🚐</h1>
+        <div class="location-text">📍 Iași, Șoseaua Voinești, nr. 52A</div>
+        
+        <div class="status-area">
+            <div id="status-banner" class="status-banner">Verificăm...</div>
+        </div>
+    </header>
+
+    <section class="content-area">
+        <div class="story-section">
+            Totul a început din pasiune pentru gustul autentic. Am plecat în Napoli și ne-am întors cu secretele maeștrilor pentru a crea Lumia Stradale. Rulota noastră roșie este acum casa pizzei napoletane adevărate.
+        </div>
+
+        <div class="action-buttons">
+            <a href="tel:0752121124" class="btn btn-call">📞 Sună (0752 121 124)</a>
+            <a href="meniu.html" class="btn btn-menu">🍕 Comandă cu ridicare</a>
+        </div>
+
+        <img src="rulota.jpeg" class="hero-image" alt="Rulota Lumia">
+    </section>
+</div>
+
+<script>
+    function checkStatus() {
+        const hour = new Date().getHours();
+        const banner = document.getElementById('status-banner');
+        if (hour >= 17 && hour < 23) {
+            banner.innerHTML = "🟢 Deschis • Până la 21:00";
+        } else {
+            banner.innerHTML = "🔴 Închis • Revenim la 17:00";
+        }
+    }
+
+    function updateStockVisuals() {
+        const stocuri = JSON.parse(localStorage.getItem('stocuri_lumia'));
+        const icon = document.getElementById('hg-icon');
+        const led = document.getElementById('hg-led');
+        const tooltip = document.getElementById('hg-tooltip');
+        if (!stocuri) return;
+
+        let isSoldOut = false; let isLow = false;
+        for (let k in stocuri) {
+            if (stocuri[k] === 0) isSoldOut = true;
+            if (stocuri[k] > 0 && stocuri[k] <= 3) isLow = true;
+        }
+
+        if (isSoldOut) {
+            icon.innerText = "⌛"; led.style.background = "#B71C1C";
+            tooltip.innerText = "Stoc epuizat pentru azi! ❌";
+        } else if (isLow) {
+            icon.innerText = "⏳"; led.style.background = "#FBC02D";
+            tooltip.innerText = "Stoc limitat! Comandă acum! ⚠️"; icon.classList.add('pulse-active');
+        } else {
+            icon.innerText = "⏳"; led.style.background = "#2E7D32";
+            tooltip.innerText = "Avem stoc proaspăt! ✅";
+        }
+    }
+
+    function showStockMsg() {
+        const tooltip = document.getElementById('hg-tooltip');
+        tooltip.style.display = (tooltip.style.display === 'block') ? 'none' : 'block';
+    }
+
+    window.onload = () => { checkStatus(); updateStockVisuals(); };
+</script>
+</body>
+</html>

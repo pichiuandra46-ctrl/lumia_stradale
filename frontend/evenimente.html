@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evenimente - Lumia Stradale</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --rosu-lumia: #B71C1C; 
+            --antracit: #121212; 
+        }
+
+        /* EFECT DE SCROLL FIN */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: #f0f0f0; 
+            margin: 0; 
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 450px;
+            background-color: white;
+            min-height: 100vh;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+        }
+
+        .nav-red {
+            background-color: var(--rosu-lumia);
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Săgeata de înapoi */
+        .back-arrow {
+            color: white;
+            text-decoration: none;
+            font-size: 22px;
+            position: absolute;
+            left: 20px;
+            z-index: 10;
+        }
+
+        .nav-title {
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0 auto;
+            cursor: pointer;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            font-size: 24px;
+            margin: 35px 20px 20px;
+            color: var(--antracit);
+        }
+
+        .availability-card {
+            background: white;
+            margin: 0 15px;
+            padding: 20px 15px;
+            border-radius: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            border: 1px solid #f0f0f0;
+        }
+
+        .schedule-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid #f8f8f8;
+        }
+
+        .schedule-row:last-child { border-bottom: none; }
+        .day-label { font-weight: 600; font-size: 13px; color: var(--antracit); }
+
+        .status-tag {
+            font-size: 9px;
+            font-weight: 700;
+            padding: 6px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+
+        .tag-green { background: #E8F5E9; color: #2E7D32; }
+        .tag-orange { background: #FFF3E0; color: #EF6C00; }
+        .tag-pink { background: #FCE4EC; color: #C2185B; }
+
+        .form-section {
+            margin-top: 50px;
+            padding: 0 20px 40px;
+        }
+
+        .solicitare-title {
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: var(--antracit);
+        }
+
+        .citat-text {
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-style: italic;
+            padding: 0 10px;
+        }
+
+        .input-group { margin-bottom: 20px; }
+        
+        label { 
+            display: block; 
+            font-size: 10px; 
+            font-weight: 600; 
+            color: #999; 
+            margin-bottom: 8px; 
+            margin-left: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        input, select, textarea {
+            width: 100%; 
+            padding: 15px; 
+            border-radius: 15px; 
+            border: 1px solid #eee; 
+            background: #fdfdfd; 
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input:focus { border-color: var(--rosu-lumia); }
+
+        .btn-submit {
+            background: var(--antracit); 
+            color: white; 
+            width: 100%; 
+            border: none; 
+            padding: 18px; 
+            border-radius: 15px; 
+            font-weight: 700; 
+            font-size: 14px; 
+            margin-top: 10px; 
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <nav class="nav-red">
+        <a href="index.html" class="back-arrow">←</a>
+        <a href="#formular-rezervare" class="nav-title">REZERVĂ ACUM</a>
+    </nav>
+
+    <h2 class="section-title">Disponibilitate săptămânală</h2>
+
+    <div class="availability-card">
+        <div class="schedule-row">
+            <span class="day-label">Luni - Joi</span>
+            <span class="status-tag tag-green">📍 ȘOS. VOINEȘTI 52A (17-21)</span>
+        </div>
+        <div class="schedule-row">
+            <span class="day-label">Vineri</span>
+            <span class="status-tag tag-orange">🥂 EVENIMENT PRIVAT (OCUPAT)</span>
+        </div>
+        <div class="schedule-row">
+            <span class="day-label">Sâmbătă</span>
+            <span class="status-tag tag-pink">🎡 FESTIVAL PALAS IAȘI</span>
+        </div>
+        <div class="schedule-row">
+            <span class="day-label">Duminică</span>
+            <span class="status-tag tag-green">📍 ȘOS. VOINEȘTI 52A (17-21)</span>
+        </div>
+    </div>
+
+    <div class="form-section" id="formular-rezervare">
+        <h2 class="solicitare-title">Solicitare la evenimentul tău</h2>
+        <p class="citat-text">
+            Vrei <b>Lumia Stradale</b> la petrecerea ta? Venim cu rulota roșie și coacem pizza live pentru invitații tăi!
+        </p>
+
+        <form onsubmit="event.preventDefault(); alert('Cerere trimisă! Te contactăm curând.'); window.location.href='index.html';">
+            <div class="input-group">
+                <label>Nume Complet</label>
+                <input type="text" placeholder="Numele tău" required>
+            </div>
+
+            <div class="input-group">
+                <label>Număr Telefon</label>
+                <input type="tel" placeholder="07xx xxx xxx" required>
+            </div>
+
+            <div class="input-group">
+                <label>Data</label>
+                <input type="date" required>
+            </div>
+
+            <div class="input-group">
+                <label>Tip Eveniment</label>
+                <select required>
+                    <option value="" disabled selected>Alege tipul...</option>
+                    <option>Nuntă</option>
+                    <option>Botez</option>
+                    <option>Corporate</option>
+                    <option>Zi de naștere</option>
+                    <option>Alt tip de eveniment</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Detalii</label>
+                <textarea rows="3" placeholder="Locație, număr persoane..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">TRIMITE SOLICITAREA</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
