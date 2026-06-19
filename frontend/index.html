@@ -115,7 +115,7 @@
     function checkStatus() {
         const hour = new Date().getHours();
         const banner = document.getElementById('status-banner');
-        if (hour >= 17 && hour < 23) {
+        if (hour >= 17 && hour < 21) {
             banner.innerHTML = "🟢 Deschis • Până la 21:00";
         } else {
             banner.innerHTML = "🔴 Închis • Revenim la 17:00";
