@@ -2,13 +2,11 @@
 <html lang="ro">
 <head>
     <script>
-    const user = localStorage.getItem('user');
-    if (!user) {
-        window.location.href = 'autentificare.html';
-    }
+        const user = localStorage.getItem('user');
+        if (!user) { window.location.href = 'autentificare.html'; }
     </script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Lumia Stradale - Pizza Napoletană</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
@@ -23,7 +21,6 @@
 
         body { font-family: 'Poppins', sans-serif; background-color: var(--fundal-gri); margin: 0; min-height: 100vh; }
         
-        /* Layout Full Width */
         .app-container {
             width: 100%;
             background-color: var(--fundal-alb);
@@ -34,16 +31,8 @@
 
         header { padding: 40px 20px; text-align: center; background-color: var(--fundal-gri); border-bottom: 1px solid #ddd; }
         
-        .top-icons { 
-            display: flex; justify-content: space-between; align-items: center; 
-            max-width: 1200px; margin: 0 auto 20px auto; width: 100%; 
-        }
-        
-        .icon-circle { 
-            width: 50px; height: 50px; background: white; border-radius: 50%; 
-            display: flex; align-items: center; justify-content: center; 
-            font-size: 22px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+        .top-icons { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto 20px auto; width: 100%; }
+        .icon-circle { width: 50px; height: 50px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         
         .brand-title { font-family: 'Playfair Display', serif; font-size: 48px; color: var(--rosu-lumia); margin: 0; }
         .location-text { font-size: 16px; color: var(--auriu-text); font-weight: 600; margin-top: 5px; }
@@ -51,36 +40,32 @@
         .status-area { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 20px; }
         .status-banner { padding: 10px 25px; border-radius: 50px; font-size: 14px; font-weight: 700; color: var(--rosu-lumia); background: var(--roz-status); }
         
-        .stock-wrapper { 
-            cursor: pointer; position: relative; display: flex; flex-direction: column; align-items: center; 
-            background: white; padding: 10px; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 30px; height: 30px; justify-content: center;
-        }
+        .stock-wrapper { cursor: pointer; position: relative; display: flex; flex-direction: column; align-items: center; background: white; padding: 10px; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 30px; height: 30px; justify-content: center; }
         .status-led { width: 8px; height: 8px; border-radius: 50%; background: #2E7D32; margin-top: 2px; }
         .stock-tooltip { display: none; position: absolute; top: 60px; background: #333; color: white; padding: 6px 10px; border-radius: 8px; font-size: 12px; z-index: 10; white-space: nowrap; }
 
-        /* Conținut centrat dar pe toată lățimea */
-        .content-area {
-            background-color: var(--fundal-alb);
-            padding: 50px 20px;
-            flex-grow: 1;
-            max-width: 800px; /* Textul stă frumos pe mijloc pe desktop */
-            margin: 0 auto;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
+        .content-area { background-color: var(--fundal-alb); padding: 50px 20px; flex-grow: 1; max-width: 800px; margin: 0 auto; width: 100%; box-sizing: border-box; }
         .story-section { text-align: center; font-size: 18px; line-height: 1.8; font-style: italic; color: #444; margin-bottom: 30px; }
-
         .action-buttons { display: flex; flex-direction: column; gap: 15px; }
         .btn { padding: 18px; border-radius: 12px; border: none; font-weight: 600; cursor: pointer; text-decoration: none; text-align: center; color: white; font-size: 16px; transition: 0.3s; }
         .btn:hover { opacity: 0.9; }
         .btn-call { background: var(--negru-butoane); }
         .btn-menu { background: var(--rosu-lumia); }
-
         .hero-image { width: 100%; margin-top: 30px; border-radius: 20px; height: 400px; object-fit: cover; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
         .pulse-active { animation: pulse 1.5s infinite; }
+
+        /* REGLAJ MOBIL: O singură pagină, fără scroll */
+        @media (max-width: 600px) {
+            header { padding: 15px; }
+            .brand-title { font-size: 32px; }
+            .content-area { padding: 20px; }
+            .story-section { font-size: 14px; margin-bottom: 15px; }
+            .hero-image { height: 180px; margin-top: 15px; }
+            .btn { padding: 14px; font-size: 14px; }
+            .action-buttons { gap: 10px; }
+        }
     </style>
 </head>
 <body>
@@ -96,10 +81,8 @@
             </div>
             <div class="icon-circle" onclick="window.location.href='evenimente.html'">📅</div>
         </div>
-        
         <h1 class="brand-title">Lumia Stradale 🚐</h1>
         <div class="location-text">📍 Iași, Șoseaua Voinești, nr. 52A</div>
-        
         <div class="status-area">
             <div id="status-banner" class="status-banner">Verificăm...</div>
         </div>
@@ -109,12 +92,10 @@
         <div class="story-section">
             Totul a început din pasiune pentru gustul autentic. Am plecat în Napoli și ne-am întors cu secretele maeștrilor pentru a crea Lumia Stradale. Rulota noastră roșie este acum casa pizzei napoletane adevărate.
         </div>
-
         <div class="action-buttons">
             <a href="tel:0752121124" class="btn btn-call">📞 Sună (0752 121 124)</a>
             <a href="meniu.html" class="btn btn-menu">🍕 Comandă cu ridicare</a>
         </div>
-
         <img src="rulota.jpeg" class="hero-image" alt="Rulota Lumia">
     </section>
 </div>
@@ -137,11 +118,8 @@
         const tooltip = document.getElementById('hg-tooltip');
         if (!stocuri) return;
 
-        let isSoldOut = false; let isLow = false;
-        for (let k in stocuri) {
-            if (stocuri[k] === 0) isSoldOut = true;
-            if (stocuri[k] > 0 && stocuri[k] <= 3) isLow = true;
-        }
+        let isSoldOut = Object.values(stocuri).includes(0);
+        let isLow = Object.values(stocuri).some(v => v > 0 && v <= 3);
 
         if (isSoldOut) {
             icon.innerText = "⌛"; led.style.background = "#B71C1C";

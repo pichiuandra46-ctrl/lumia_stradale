@@ -2,7 +2,7 @@
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Autentificare - Lumia Stradale</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
@@ -22,15 +22,27 @@
             min-height: 100vh; 
         }
 
-        /* Container fluid: pe mobil ocupă 95%, pe desktop se oprește la 600px */
+        /* Container: Pe mobil ocupă tot, pe desktop e o fereastră centrată */
         .app-container { 
-            width: 95%; 
-            max-width: 600px; 
+            width: 100%; 
+            max-width: 450px; 
             background-color: var(--crem-hartie); 
-            padding: 40px; 
+            min-height: 100vh; 
+            padding: 40px 25px; 
             box-sizing: border-box; 
-            box-shadow: 0 0 30px rgba(0,0,0,0.1); 
-            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @media (min-width: 768px) {
+            .app-container {
+                max-width: 500px;
+                min-height: auto;
+                border-radius: 30px;
+                box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            }
         }
 
         header { text-align: center; margin-bottom: 30px; }
@@ -41,13 +53,15 @@
         
         .input-group { margin-bottom: 15px; }
         .input-group label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px; color: #666; }
-        .input-group input { width: 100%; padding: 12px 15px; border: 1px solid #eee; border-radius: 10px; box-sizing: border-box; }
+        .input-group input { width: 100%; padding: 14px; border: 1px solid #eee; border-radius: 12px; box-sizing: border-box; font-size: 15px; }
         
-        .row-utils { display: flex; justify-content: space-between; align-items: center; margin: 15px 0 25px; font-size: 13px; }
-        .btn-auth { width: 100%; padding: 15px; background: var(--rosu-lumia); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; }
+        .row-utils { display: flex; justify-content: space-between; align-items: center; margin: 20px 0; font-size: 13px; }
+        .btn-auth { width: 100%; padding: 16px; background: var(--rosu-lumia); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 16px; transition: 0.3s; }
+        .btn-auth:hover { background: #8e1515; }
         
         .switch-form { text-align: center; margin-top: 20px; font-size: 13px; color: #666; }
         .switch-form span { color: var(--rosu-lumia); font-weight: 600; cursor: pointer; text-decoration: underline; }
+        
         #register-fields { display: none; }
     </style>
 </head>
@@ -56,34 +70,40 @@
 <div class="app-container">
     <header><div class="logo-text">Lumia Stradale</div></header>
 
-    <div class="auth-box">
+    <div class="auth-box" id="auth-box">
         <h2 id="form-header" class="form-title">Intră în cont</h2>
         
         <form id="authForm" onsubmit="handleAuth(event)">
-            <div class="input-group">
-                <label>Email</label>
-                <input type="email" id="email" placeholder="exemplu@gmail.com" required>
-            </div>
-
-            <div id="register-fields">
+            <div id="fields-container">
                 <div class="input-group">
-                    <label>Nume Complet</label>
-                    <input type="text" id="nume" placeholder="Ex: Ion Popescu">
+                    <label>Email</label>
+                    <input type="email" id="email" placeholder="exemplu@gmail.com" required>
                 </div>
-                <div class="input-group">
-                    <label>Număr Telefon</label>
-                    <input type="tel" id="telefon" placeholder="07xx xxx xxx">
-                </div>
-            </div>
 
-            <div class="input-group">
-                <label>Parolă</label>
-                <input type="password" id="parola" placeholder="••••••••" required>
+                <div id="register-fields">
+                    <div class="input-group">
+                        <label>Nume Complet</label>
+                        <input type="text" id="nume" placeholder="Ex: Ion Popescu">
+                    </div>
+                    <div class="input-group">
+                        <label>Număr Telefon</label>
+                        <input type="tel" id="telefon" placeholder="07xx xxx xxx">
+                    </div>
+                    <div class="input-group">
+                        <label>Data Nașterii</label>
+                        <input type="date" id="data">
+                    </div>
+                </div>
+
+                <div class="input-group" id="password-group">
+                    <label>Parolă</label>
+                    <input type="password" id="parola" placeholder="••••••••" required>
+                </div>
             </div>
 
             <div class="row-utils" id="row-utils">
-                <label><input type="checkbox"> Rămâi conectat</label>
-                <a href="#" style="color: var(--rosu-lumia); font-size: 12px;">Ai uitat parola?</a>
+                <label style="display:flex; align-items:center; gap:8px;"><input type="checkbox"> Rămâi conectat</label>
+                <a href="#" style="color: var(--rosu-lumia); cursor: pointer;" onclick="showResetForm(event)">Ai uitat parola?</a>
             </div>
 
             <button type="submit" class="btn-auth" id="submit-btn">Intră în cont</button>
@@ -98,6 +118,28 @@
 <script>
     let isLogin = true;
 
+    // Flux recuperare parola
+    function showResetForm(event) {
+        event.preventDefault();
+        document.getElementById('form-header').innerText = "Recuperare parolă";
+        document.getElementById('fields-container').innerHTML = `
+            <div class="input-group">
+                <label>Introdu email-ul tău</label>
+                <input type="email" id="reset-email" placeholder="exemplu@gmail.com" required>
+            </div>
+            <p style="font-size:12px; color:#666; text-align:center;">Vei primi un link de resetare pe adresa de email.</p>
+        `;
+        document.getElementById('row-utils').style.display = 'none';
+        document.getElementById('switch-text').innerHTML = '<span onclick="location.reload()">Înapoi la autentificare</span>';
+        document.getElementById('submit-btn').innerText = "Trimite link";
+        document.getElementById('authForm').onsubmit = function(e) {
+            e.preventDefault();
+            alert("Un link de resetare a fost trimis la " + document.getElementById('reset-email').value);
+            location.reload();
+        };
+    }
+
+    // Comutare Login/Register
     function toggleForm() {
         isLogin = !isLogin;
         document.getElementById('register-fields').style.display = isLogin ? 'none' : 'block';
@@ -109,17 +151,18 @@
             'Ai deja cont? <span onclick="toggleForm()">Autentifică-te</span>';
     }
 
+    // Logica Autentificare
     async function handleAuth(event) {
         event.preventDefault();
-        const urlComplet = 'https://lumia-stradale.onrender.com/api/' + (isLogin ? 'login' : 'register');
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('parola').value;
+        const urlComplet = 'https://lumia-stradale.onrender.com' + (isLogin ? '/api/login' : '/api/register');
 
-        let dateFormular = { 
-            email: document.getElementById('email').value, 
-            password: document.getElementById('parola').value 
-        };
+        let dateFormular = { email, password };
         if (!isLogin) {
             dateFormular.name = document.getElementById('nume').value;
             dateFormular.phone = document.getElementById('telefon').value;
+            dateFormular.birthdate = document.getElementById('data').value;
         }
 
         try {
@@ -140,9 +183,7 @@
             } else {
                 alert(data.message || 'Date incorecte!');
             }
-        } catch (error) {
-            alert('Eroare de conexiune cu serverul!');
-        }
+        } catch (error) { alert('Eroare de conexiune!'); }
     }
 </script>
 </body>
