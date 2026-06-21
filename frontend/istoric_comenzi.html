@@ -17,21 +17,20 @@
             font-family: 'Poppins', sans-serif; 
             background-color: #f0f0f0; 
             margin: 0; 
-            display: flex;
-            justify-content: center;
+            min-height: 100vh;
         }
 
         .app-container {
             width: 100%;
-            max-width: 450px;
             background-color: var(--fundal-gri);
             min-height: 100vh;
-            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
         }
 
         .nav-red {
             background-color: var(--rosu-lumia);
-            padding: 18px 20px;
+            padding: 18px 5%;
             display: flex;
             align-items: center;
             position: sticky;
@@ -56,14 +55,22 @@
             margin: 0 auto;
         }
 
-        .content { padding: 20px 15px; }
+        .content { 
+            padding: 20px 5%; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            width: 100%;
+            box-sizing: border-box;
+        }
 
+        /* Titlul este acum perfect centrat */
         .section-intro {
             font-family: 'Playfair Display', serif;
             font-size: 20px;
             margin-bottom: 20px;
             color: var(--antracit);
-            padding-left: 5px;
+            text-align: center;
+            width: 100%;
         }
 
         #orders-holder { width: 100%; }
@@ -126,6 +133,7 @@
             font-weight: 600;
             text-decoration: none;
             transition: 0.2s;
+            cursor: pointer;
         }
 
         .btn-reorder:active { background: var(--rosu-lumia); color: white; }
@@ -137,7 +145,6 @@
         }
         .no-orders-icon { font-size: 56px; margin-bottom: 15px; }
         .no-orders p { margin: 0 0 20px 0; font-size: 14px; font-weight: 500; }
-
     </style>
 </head>
 <body>
@@ -150,7 +157,6 @@
 
     <div class="content">
         <h2 class="section-intro">Ultimele tale pofte 🍕</h2>
-
         <div id="orders-holder"></div>
     </div>
 </div>
@@ -160,10 +166,8 @@
         const user = JSON.parse(localStorage.getItem('user'));
         const holder = document.getElementById('orders-holder');
         
-        // Preluăm strict array-ul de comenzi al utilizatorului conectat (dacă nu există, inițializăm un array gol)
         let comenzi = (user && user.orders) ? user.orders : [];
 
-        // Dacă utilizatorul nu a efectuat nicio comandă din meniu.html, afișăm ecranul gol corespunzător
         if (comenzi.length === 0) {
             holder.innerHTML = `
                 <div class="no-orders">
@@ -174,15 +178,11 @@
             return;
         }
 
-        // Dacă există comenzi reale, le mapăm și le afișăm cronologic (cele mai noi primele)
         let htmlConstruct = "";
-        
-        // Inversăm vectorul pentru a vedea ultima comandă plasată în partea de sus
         const comenziInversate = [...comenzi].reverse();
 
         comenziInversate.forEach(comanda => {
             let produseHTML = "";
-            // Verificăm dacă produsele sunt stocate ca array sau text simplu splituit
             const listaProduse = Array.isArray(comanda.produse) ? comanda.produse : [comanda.produse];
             
             listaProduse.forEach(prod => {

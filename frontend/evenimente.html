@@ -11,36 +11,31 @@
             --antracit: #121212; 
         }
 
-        /* EFECT DE SCROLL FIN */
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body { 
             font-family: 'Poppins', sans-serif; 
             background-color: #f0f0f0; 
             margin: 0; 
-            display: flex;
-            justify-content: center;
+            min-height: 100vh;
         }
 
         .app-container {
             width: 100%;
-            max-width: 450px;
             background-color: white;
             min-height: 100vh;
+            margin: 0 auto;
             box-shadow: 0 0 30px rgba(0,0,0,0.1);
         }
 
         .nav-red {
             background-color: var(--rosu-lumia);
-            padding: 18px 20px;
+            padding: 18px 5%;
             display: flex;
             align-items: center;
             position: relative;
         }
 
-        /* Săgeata de înapoi */
         .back-arrow {
             color: white;
             text-decoration: none;
@@ -59,6 +54,13 @@
             letter-spacing: 2px;
             margin: 0 auto;
             cursor: pointer;
+        }
+
+        /* Container pentru conținut pentru a fi centrat și arăta bine pe ecrane mari */
+        .content-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            padding-bottom: 40px;
         }
 
         .section-title {
@@ -174,68 +176,70 @@
         <a href="#formular-rezervare" class="nav-title">REZERVĂ ACUM</a>
     </nav>
 
-    <h2 class="section-title">Disponibilitate săptămânală</h2>
+    <div class="content-wrapper">
+        <h2 class="section-title">Disponibilitate săptămânală</h2>
 
-    <div class="availability-card">
-        <div class="schedule-row">
-            <span class="day-label">Luni - Joi</span>
-            <span class="status-tag tag-green">📍 ȘOS. VOINEȘTI 52A (17-21)</span>
+        <div class="availability-card">
+            <div class="schedule-row">
+                <span class="day-label">Luni - Joi</span>
+                <span class="status-tag tag-green">📍 ȘOS. VOINEȘTI 52A (17-21)</span>
+            </div>
+            <div class="schedule-row">
+                <span class="day-label">Vineri</span>
+                <span class="status-tag tag-orange">🥂 EVENIMENT PRIVAT (OCUPAT)</span>
+            </div>
+            <div class="schedule-row">
+                <span class="day-label">Sâmbătă</span>
+                <span class="status-tag tag-pink">🎡 FESTIVAL PALAS IAȘI</span>
+            </div>
+            <div class="schedule-row">
+                <span class="day-label">Duminică</span>
+                <span class="status-tag tag-green">📍 ȘOS. VOINEȘTI 52A (17-21)</span>
+            </div>
         </div>
-        <div class="schedule-row">
-            <span class="day-label">Vineri</span>
-            <span class="status-tag tag-orange">🥂 EVENIMENT PRIVAT (OCUPAT)</span>
+
+        <div class="form-section" id="formular-rezervare">
+            <h2 class="solicitare-title">Solicitare la evenimentul tău</h2>
+            <p class="citat-text">
+                Vrei <b>Lumia Stradale</b> la petrecerea ta? Venim cu rulota roșie și coacem pizza live pentru invitații tăi!
+            </p>
+
+            <form onsubmit="event.preventDefault(); alert('Cerere trimisă! Te contactăm curând.'); window.location.href='index.html';">
+                <div class="input-group">
+                    <label>Nume Complet</label>
+                    <input type="text" placeholder="Numele tău" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Număr Telefon</label>
+                    <input type="tel" placeholder="07xx xxx xxx" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Data</label>
+                    <input type="date" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Tip Eveniment</label>
+                    <select required>
+                        <option value="" disabled selected>Alege tipul...</option>
+                        <option>Nuntă</option>
+                        <option>Botez</option>
+                        <option>Corporate</option>
+                        <option>Zi de naștere</option>
+                        <option>Alt tip de eveniment</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Detalii</label>
+                    <textarea rows="3" placeholder="Locație, număr persoane..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">TRIMITE SOLICITAREA</button>
+            </form>
         </div>
-        <div class="schedule-row">
-            <span class="day-label">Sâmbătă</span>
-            <span class="status-tag tag-pink">🎡 FESTIVAL PALAS IAȘI</span>
-        </div>
-        <div class="schedule-row">
-            <span class="day-label">Duminică</span>
-            <span class="status-tag tag-green">📍 ȘOS. VOINEȘTI 52A (17-21)</span>
-        </div>
-    </div>
-
-    <div class="form-section" id="formular-rezervare">
-        <h2 class="solicitare-title">Solicitare la evenimentul tău</h2>
-        <p class="citat-text">
-            Vrei <b>Lumia Stradale</b> la petrecerea ta? Venim cu rulota roșie și coacem pizza live pentru invitații tăi!
-        </p>
-
-        <form onsubmit="event.preventDefault(); alert('Cerere trimisă! Te contactăm curând.'); window.location.href='index.html';">
-            <div class="input-group">
-                <label>Nume Complet</label>
-                <input type="text" placeholder="Numele tău" required>
-            </div>
-
-            <div class="input-group">
-                <label>Număr Telefon</label>
-                <input type="tel" placeholder="07xx xxx xxx" required>
-            </div>
-
-            <div class="input-group">
-                <label>Data</label>
-                <input type="date" required>
-            </div>
-
-            <div class="input-group">
-                <label>Tip Eveniment</label>
-                <select required>
-                    <option value="" disabled selected>Alege tipul...</option>
-                    <option>Nuntă</option>
-                    <option>Botez</option>
-                    <option>Corporate</option>
-                    <option>Zi de naștere</option>
-                    <option>Alt tip de eveniment</option>
-                </select>
-            </div>
-
-            <div class="input-group">
-                <label>Detalii</label>
-                <textarea rows="3" placeholder="Locație, număr persoane..."></textarea>
-            </div>
-
-            <button type="submit" class="btn-submit">TRIMITE SOLICITAREA</button>
-        </form>
     </div>
 </div>
 

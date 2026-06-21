@@ -13,120 +13,31 @@
             --auriu: #C5A059;
         }
 
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            background-color: #f0f0f0; 
-            margin: 0; 
-            display: flex;
-            justify-content: center;
-        }
+        body { font-family: 'Poppins', sans-serif; background-color: #f0f0f0; margin: 0; min-height: 100vh; }
 
-        .app-container {
-            width: 100%;
-            max-width: 450px;
-            background-color: var(--fundal);
-            min-height: 100vh;
-            box-shadow: 0 0 30px rgba(0,0,0,0.1);
-        }
+        .app-container { width: 100%; min-height: 100vh; background-color: var(--fundal); display: flex; flex-direction: column; }
 
-        .nav-red {
-            background-color: var(--rosu-lumia);
-            padding: 18px 20px;
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-
+        .nav-red { background-color: var(--rosu-lumia); padding: 18px 5%; display: flex; align-items: center; position: relative; }
         .back-arrow { color: white; text-decoration: none; font-size: 22px; position: absolute; left: 20px; }
         .nav-title { color: white; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin: 0 auto; }
 
-        .content { padding: 30px 20px; }
-
+        .content { padding: 30px 5%; max-width: 800px; margin: 0 auto; width: 90%; }
         .section-header { text-align: center; margin-bottom: 30px; }
         .section-header h2 { font-family: 'Playfair Display', serif; margin: 0; font-size: 24px; color: var(--antracit); }
         .section-header p { font-size: 13px; color: #666; margin-top: 10px; }
 
-        /* Stil Formular */
-        .feedback-card {
-            background: white;
-            padding: 25px 20px;
-            border-radius: 25px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
-            border: 1px solid #eee;
-        }
+        .feedback-card { background: white; padding: 25px 5%; border-radius: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.03); border: 1px solid #eee; }
+        label { display: block; font-size: 10px; font-weight: 700; text-transform: uppercase; color: #999; margin-bottom: 8px; margin-left: 5px; }
+        select, textarea { width: 100%; padding: 15px; border-radius: 15px; border: 1px solid #eee; background: #fdfdfd; font-family: inherit; font-size: 14px; box-sizing: border-box; margin-bottom: 25px; }
 
-        label { 
-            display: block; 
-            font-size: 10px; 
-            font-weight: 700; 
-            text-transform: uppercase; 
-            color: #999; 
-            margin-bottom: 8px; 
-            margin-left: 5px;
-        }
-
-        select, textarea {
-            width: 100%;
-            padding: 15px;
-            border-radius: 15px;
-            border: 1px solid #eee;
-            background: #fdfdfd;
-            font-family: inherit;
-            font-size: 14px;
-            box-sizing: border-box;
-            margin-bottom: 25px;
-        }
-
-        /* Sistem Stele */
-        .stars-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 25px;
-            direction: rtl; /* Pentru a facilita selectarea cu CSS */
-        }
-
+        .stars-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; direction: rtl; }
         .stars-container input { display: none; }
-        .stars-container label {
-            font-size: 35px;
-            color: #ddd;
-            cursor: pointer;
-            transition: color 0.2s;
-            margin: 0;
-        }
+        .stars-container label { font-size: 35px; color: #ddd; cursor: pointer; transition: color 0.2s; margin: 0; }
+        .stars-container label:hover, .stars-container label:hover ~ label, .stars-container input:checked ~ label { color: var(--auriu); }
 
-        .stars-container label:hover,
-        .stars-container label:hover ~ label,
-        .stars-container input:checked ~ label {
-            color: var(--auriu);
-        }
-
-        .btn-submit {
-            background: var(--antracit);
-            color: white;
-            width: 100%;
-            border: none;
-            padding: 18px;
-            border-radius: 15px;
-            font-weight: 700;
-            font-size: 15px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
+        .btn-submit { background: var(--antracit); color: white; width: 100%; border: none; padding: 18px; border-radius: 15px; font-weight: 700; font-size: 15px; cursor: pointer; transition: 0.3s; }
         .btn-submit:active { transform: scale(0.97); }
-
-        .bonus-notice {
-            margin-top: 20px;
-            font-size: 11px;
-            color: var(--verde-status);
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            color: #2E7D32;
-        }
+        .bonus-notice { margin-top: 20px; font-size: 11px; color: #2E7D32; text-align: center; }
     </style>
 </head>
 <body>
@@ -140,23 +51,19 @@
     <div class="content">
         <div class="section-header">
             <h2>Cum a fost pizza?</h2>
-            <p>Părerea ta contează enorm pentru noi. Ajută-ne să fim mai buni!</p>
+            <p>Părerea ta contează enorm pentru noi.</p>
         </div>
 
         <div class="feedback-card">
-            <form onsubmit="event.preventDefault(); alert('Mulțumim pentru feedback! Am adăugat 5 puncte bonus în contul tău.'); window.location.href='contul-meu.html';">
-                
+            <form id="feedback-form">
                 <label>Alege comanda vizată</label>
-                <select required>
+                <select id="order-select" required>
                     <option value="" disabled selected>Selectează o comandă...</option>
-                    <option>Comanda #4421 (20 Aprilie)</option>
-                    <option>Comanda #4310 (12 Aprilie)</option>
-                    <option>Altă experiență</option>
                 </select>
 
                 <label>Cât de mult ți-a plăcut?</label>
                 <div class="stars-container">
-                    <input type="radio" name="star" id="star5" value="5"><label for="star5">★</label>
+                    <input type="radio" name="star" id="star5" value="5" required><label for="star5">★</label>
                     <input type="radio" name="star" id="star4" value="4"><label for="star4">★</label>
                     <input type="radio" name="star" id="star3" value="3"><label for="star3">★</label>
                     <input type="radio" name="star" id="star2" value="2"><label for="star2">★</label>
@@ -164,17 +71,45 @@
                 </div>
 
                 <label>Mesajul tău (opțional)</label>
-                <textarea rows="4" placeholder="Spune-ne ce ți-a plăcut sau ce putem îmbunătăți..."></textarea>
+                <textarea rows="4" placeholder="Spune-ne ce ți-a plăcut..."></textarea>
 
                 <button type="submit" class="btn-submit">TRIMITE FEEDBACK</button>
-                
-                <div class="bonus-notice">
-                    ✨ Primești <b>5 puncte loialitate</b> pentru feedback!
-                </div>
+                <div class="bonus-notice">✨ Primești 5 puncte loialitate pentru feedback!</div>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+    window.onload = () => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const select = document.getElementById('order-select');
+
+        // Populăm lista de comenzi doar pentru utilizatorul logat
+        if (user && user.orders && user.orders.length > 0) {
+            user.orders.forEach(comanda => {
+                let opt = document.createElement('option');
+                opt.value = comanda.id;
+                opt.innerHTML = `Comanda #${comanda.id} (${comanda.data})`;
+                select.appendChild(opt);
+            });
+        } else {
+            select.innerHTML = '<option disabled>Nu ai comenzi anterioare</option>';
+        }
+    };
+
+    document.getElementById('feedback-form').onsubmit = (e) => {
+        e.preventDefault();
+        
+        // Adăugăm punctele bonus folosind "points" (ca în Cardul de Loialitate)
+        let user = JSON.parse(localStorage.getItem('user'));
+        user.points = (parseInt(user.points) || 0) + 5;
+        localStorage.setItem('user', JSON.stringify(user));
+
+        alert('Mulțumim pentru feedback! Am adăugat 5 puncte bonus în contul tău.');
+        window.location.href = 'contul_meu.html';
+    };
+</script>
 
 </body>
 </html>

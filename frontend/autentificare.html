@@ -12,17 +12,40 @@
             --crem-hartie: #FDFBF7;
         }
 
-        body { font-family: 'Poppins', sans-serif; background-color: #f0f0f0; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; color: var(--antracit); }
-        .app-container { width: 100%; max-width: 450px; background-color: var(--crem-hartie); min-height: 100vh; padding: 40px 30px; box-sizing: border-box; box-shadow: 0 0 30px rgba(0,0,0,0.1); }
-        header { text-align: center; margin-bottom: 40px; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: #f0f0f0; 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+        }
+
+        /* Container fluid: pe mobil ocupă 95%, pe desktop se oprește la 600px */
+        .app-container { 
+            width: 95%; 
+            max-width: 600px; 
+            background-color: var(--crem-hartie); 
+            padding: 40px; 
+            box-sizing: border-box; 
+            box-shadow: 0 0 30px rgba(0,0,0,0.1); 
+            border-radius: 20px;
+        }
+
+        header { text-align: center; margin-bottom: 30px; }
         .logo-text { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--rosu-lumia); }
-        .auth-box { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .form-title { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 25px; text-align: center; }
+        
+        .auth-box { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .form-title { font-family: 'Playfair Display', serif; font-size: 24px; margin-bottom: 25px; text-align: center; }
+        
         .input-group { margin-bottom: 15px; }
         .input-group label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 5px; color: #666; }
         .input-group input { width: 100%; padding: 12px 15px; border: 1px solid #eee; border-radius: 10px; box-sizing: border-box; }
+        
         .row-utils { display: flex; justify-content: space-between; align-items: center; margin: 15px 0 25px; font-size: 13px; }
         .btn-auth { width: 100%; padding: 15px; background: var(--rosu-lumia); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; }
+        
         .switch-form { text-align: center; margin-top: 20px; font-size: 13px; color: #666; }
         .switch-form span { color: var(--rosu-lumia); font-weight: 600; cursor: pointer; text-decoration: underline; }
         #register-fields { display: none; }
@@ -50,10 +73,6 @@
                 <div class="input-group">
                     <label>Număr Telefon</label>
                     <input type="tel" id="telefon" placeholder="07xx xxx xxx">
-                </div>
-                <div class="input-group">
-                    <label>Data Nașterii</label>
-                    <input type="date" id="data">
                 </div>
             </div>
 
@@ -92,15 +111,12 @@
 
     async function handleAuth(event) {
         event.preventDefault();
+        const urlComplet = 'https://lumia-stradale.onrender.com/api/' + (isLogin ? 'login' : 'register');
 
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('parola').value;
-
-        // REPARAT CONFORM SERVER.JS: Am adaugat /api inainte de ruta
-        const ruta = isLogin ? '/api/login' : '/api/register';
-        const urlComplet = 'https://lumia-stradale.onrender.com' + ruta;
-
-        let dateFormular = { email, password };
+        let dateFormular = { 
+            email: document.getElementById('email').value, 
+            password: document.getElementById('parola').value 
+        };
         if (!isLogin) {
             dateFormular.name = document.getElementById('nume').value;
             dateFormular.phone = document.getElementById('telefon').value;
@@ -112,31 +128,22 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(dateFormular)
             });
-
             const data = await response.json();
-
             if (response.ok) {
                 if (isLogin) {
-                    // Salvăm utilizatorul exact în formatul recunoscut de index.html
                     localStorage.setItem('user', JSON.stringify(data.user));
-                    
-                    // Redirecționare către index.html din folderul frontend
                     window.location.href = 'index.html';
                 } else {
-                    alert('Cont creat cu succes! Acum te poți autentifica.');
+                    alert('Cont creat cu succes!');
                     toggleForm();
                 }
             } else {
                 alert(data.message || 'Date incorecte!');
             }
         } catch (error) {
-            alert('Eroare de conexiune cu serverul de pe Render!');
-            console.error(error);
+            alert('Eroare de conexiune cu serverul!');
         }
-
-        return false;
     }
 </script>
-
 </body>
 </html>

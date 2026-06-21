@@ -17,21 +17,21 @@
             font-family: 'Poppins', sans-serif; 
             background-color: #f0f0f0; 
             margin: 0; 
-            display: flex;
-            justify-content: center;
+            min-height: 100vh;
         }
 
+        /* Containerul ocupă toată lățimea ecranului */
         .app-container {
             width: 100%;
-            max-width: 450px;
-            background-color: var(--fundal);
             min-height: 100vh;
-            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            background-color: var(--fundal);
+            display: flex;
+            flex-direction: column;
         }
 
         .nav-red {
             background-color: var(--rosu-lumia);
-            padding: 18px 20px;
+            padding: 18px 5%; /* Padding procentual pentru adaptabilitate */
             display: flex;
             align-items: center;
             position: relative;
@@ -40,7 +40,8 @@
         .back-arrow { color: white; text-decoration: none; font-size: 22px; position: absolute; left: 20px; }
         .nav-title { color: white; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin: 0 auto; }
 
-        .content { padding: 25px 20px; text-align: center; }
+        /* Conținutul se extinde natural pe pagină */
+        .content { padding: 25px 5%; text-align: center; max-width: 800px; margin: 0 auto; width: 90%; }
 
         .virtual-card {
             background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
@@ -167,8 +168,6 @@
     window.onload = () => {
         let user = JSON.parse(localStorage.getItem('user')) || { name: 'Client Lumia', points: 0, id: 'LUM-0000' };
         
-        // --- MECANISM DE SIGURANȚĂ ---
-        // Resetează automat punctele la 0 dacă valoarea este cea veche (173)
         if (user.points === 173) {
             user.points = 0;
             localStorage.setItem('user', JSON.stringify(user));

@@ -16,21 +16,21 @@
             font-family: 'Poppins', sans-serif; 
             background-color: #f0f0f0; 
             margin: 0; 
-            display: flex;
-            justify-content: center;
+            min-height: 100vh;
         }
 
+        /* Containerul ocupă acum tot ecranul */
         .app-container {
             width: 100%;
-            max-width: 450px;
-            background-color: var(--fundal);
             min-height: 100vh;
-            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            background-color: var(--fundal);
+            display: flex;
+            flex-direction: column;
         }
 
         .nav-red {
             background-color: var(--rosu-lumia);
-            padding: 18px 20px;
+            padding: 18px 5%;
             display: flex;
             align-items: center;
             position: relative;
@@ -39,7 +39,12 @@
         .back-arrow { color: white; text-decoration: none; font-size: 22px; position: absolute; left: 20px; }
         .nav-title { color: white; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin: 0 auto; }
 
-        .content { padding: 30px 20px; }
+        .content { 
+            padding: 30px 5%; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            width: 90%;
+        }
 
         .profile-pic-center {
             text-align: center;
@@ -61,7 +66,7 @@
 
         .settings-card {
             background: white;
-            padding: 25px 20px;
+            padding: 25px 5%;
             border-radius: 25px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.03);
             border: 1px solid #eee;
@@ -174,7 +179,6 @@
             if (user.phone) document.getElementById('set-phone').value = user.phone;
             if (user.email) document.getElementById('set-email').value = user.email;
             
-            // Dacă data de naștere a fost salvată în baza de date, o completăm (altfel punem o valoare standard)
             document.getElementById('set-date').value = user.birthDate || "2004-12-26";
         }
     };

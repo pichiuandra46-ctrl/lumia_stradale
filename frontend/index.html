@@ -2,14 +2,11 @@
 <html lang="ro">
 <head>
     <script>
-    // Verificăm dacă există datele utilizatorului în memoria browserului (localStorage)
     const user = localStorage.getItem('user');
-    
-    // Dacă NU este logat, îl redirecționăm instant către pagina de autentificare
     if (!user) {
         window.location.href = 'autentificare.html';
     }
-</script>
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lumia Stradale - Pizza Napoletană</title>
@@ -20,56 +17,67 @@
             --fundal-alb: #FFFFFF;
             --rosu-lumia: #B01E22;
             --negru-butoane: #1A1A1A;
-            --mov-profil: #4B367C;
             --roz-status: #FCEAEA;
             --auriu-text: #B7965F;
         }
 
-        body { font-family: 'Poppins', sans-serif; background-color: var(--fundal-gri); margin: 0; display: flex; justify-content: center; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--fundal-gri); margin: 0; min-height: 100vh; }
         
-        .app-container { width: 100%; max-width: 450px; background-color: var(--fundal-gri); min-height: 100vh; display: flex; flex-direction: column; }
+        /* Layout Full Width */
+        .app-container {
+            width: 100%;
+            background-color: var(--fundal-alb);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-        /* HEADER: Fundal gri */
-        header { padding: 20px; text-align: center; position: relative; background-color: var(--fundal-gri); }
+        header { padding: 40px 20px; text-align: center; background-color: var(--fundal-gri); border-bottom: 1px solid #ddd; }
         
-        .top-icons { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .top-icons { 
+            display: flex; justify-content: space-between; align-items: center; 
+            max-width: 1200px; margin: 0 auto 20px auto; width: 100%; 
+        }
         
-        /* Cerc pentru iconițe - similar cu image_08aa43.png */
         .icon-circle { 
             width: 50px; height: 50px; background: white; border-radius: 50%; 
             display: flex; align-items: center; justify-content: center; 
             font-size: 22px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
-        .brand-title { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--rosu-lumia); margin: 0; }
-        .location-text { font-size: 13px; color: var(--auriu-text); font-weight: 600; margin-top: 5px; }
+        .brand-title { font-family: 'Playfair Display', serif; font-size: 48px; color: var(--rosu-lumia); margin: 0; }
+        .location-text { font-size: 16px; color: var(--auriu-text); font-weight: 600; margin-top: 5px; }
         
-        .status-area { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 15px; }
-        .status-banner { padding: 8px 20px; border-radius: 50px; font-size: 12px; font-weight: 700; color: var(--rosu-lumia); background: var(--roz-status); }
+        .status-area { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 20px; }
+        .status-banner { padding: 10px 25px; border-radius: 50px; font-size: 14px; font-weight: 700; color: var(--rosu-lumia); background: var(--roz-status); }
         
-        /* Clepsidra in cerc */
         .stock-wrapper { 
             cursor: pointer; position: relative; display: flex; flex-direction: column; align-items: center; 
             background: white; padding: 10px; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.1); width: 30px; height: 30px; justify-content: center;
         }
         .status-led { width: 8px; height: 8px; border-radius: 50%; background: #2E7D32; margin-top: 2px; }
-        .stock-tooltip { display: none; position: absolute; top: 60px; background: #333; color: white; padding: 6px 10px; border-radius: 8px; font-size: 10px; z-index: 10; white-space: nowrap; }
+        .stock-tooltip { display: none; position: absolute; top: 60px; background: #333; color: white; padding: 6px 10px; border-radius: 8px; font-size: 12px; z-index: 10; white-space: nowrap; }
 
-        /* CONȚINUT: Linie dreaptă, fundal alb */
+        /* Conținut centrat dar pe toată lățimea */
         .content-area {
             background-color: var(--fundal-alb);
-            padding: 30px 20px;
+            padding: 50px 20px;
             flex-grow: 1;
+            max-width: 800px; /* Textul stă frumos pe mijloc pe desktop */
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        .story-section { text-align: center; font-size: 14px; line-height: 1.6; font-style: italic; color: #444; margin-bottom: 20px; }
+        .story-section { text-align: center; font-size: 18px; line-height: 1.8; font-style: italic; color: #444; margin-bottom: 30px; }
 
-        .action-buttons { display: flex; flex-direction: column; gap: 12px; padding: 0 10px 20px; }
-        .btn { padding: 16px; border-radius: 12px; border: none; font-weight: 600; cursor: pointer; text-decoration: none; text-align: center; color: white; }
+        .action-buttons { display: flex; flex-direction: column; gap: 15px; }
+        .btn { padding: 18px; border-radius: 12px; border: none; font-weight: 600; cursor: pointer; text-decoration: none; text-align: center; color: white; font-size: 16px; transition: 0.3s; }
+        .btn:hover { opacity: 0.9; }
         .btn-call { background: var(--negru-butoane); }
         .btn-menu { background: var(--rosu-lumia); }
 
-        .hero-image { width: 100%; margin-top: 10px; border-radius: 0; height: 180px; object-fit: cover; }
+        .hero-image { width: 100%; margin-top: 30px; border-radius: 20px; height: 400px; object-fit: cover; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
         .pulse-active { animation: pulse 1.5s infinite; }

@@ -17,18 +17,18 @@
             font-family: 'Poppins', sans-serif; 
             background-color: #f0f0f0; 
             margin: 0; 
-            display: flex;
-            justify-content: center;
+            padding: 0;
+            width: 100%;
         }
 
+        /* Containerul ocupă toată lățimea și înălțimea ecranului */
         .app-container {
             width: 100%;
-            max-width: 450px;
-            background-color: var(--fundal-chat);
             height: 100vh;
+            background-color: var(--fundal-chat);
             display: flex;
             flex-direction: column;
-            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            margin: 0;
         }
 
         /* Header Chat */
@@ -58,7 +58,7 @@
         .status-info h3 { margin: 0; font-size: 14px; color: var(--antracit); }
         .status-info span { font-size: 11px; color: #4caf50; font-weight: 600; }
 
-        /* Zona de mesaje */
+        /* Zona de mesaje - se întinde pe tot spațiul disponibil */
         .chat-messages {
             flex-grow: 1;
             padding: 20px;
@@ -185,7 +185,6 @@
         
         if (input.value.trim() === "") return;
 
-        // Mesajul utilizatorului
         const userDiv = document.createElement('div');
         userDiv.className = 'message user';
         userDiv.innerText = input.value;
@@ -194,10 +193,8 @@
         const currentMsg = input.value.toLowerCase();
         input.value = "";
 
-        // Scroll la final
         chatBox.scrollTop = chatBox.scrollHeight;
 
-        // Răspuns simulat Bot
         setTimeout(() => {
             const botDiv = document.createElement('div');
             botDiv.className = 'message bot';

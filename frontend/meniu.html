@@ -12,11 +12,22 @@
             --crem-hartie: #FDFBF7;
         }
 
-        body { font-family: 'Poppins', sans-serif; background-color: #f0f0f0; margin: 0; display: flex; justify-content: center; }
+        /* Am setat body să ocupe tot spațiul fără constrângeri */
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background-color: #f0f0f0; 
+            margin: 0; 
+            width: 100%;
+        }
 
+        /* Containerul ocupă toată lățimea disponibilă */
         .app-container {
-            width: 100%; max-width: 450px; background-color: var(--crem-hartie);
-            min-height: 100vh; padding: 20px 20px 120px 20px; box-sizing: border-box; position: relative;
+            width: 100%; 
+            background-color: var(--crem-hartie);
+            min-height: 100vh; 
+            padding: 20px; 
+            box-sizing: border-box; 
+            position: relative;
         }
 
         /* Header centrat */
@@ -40,15 +51,16 @@
         
         .add-btn { background: var(--rosu-lumia); color: white; border: none; width: 28px; height: 28px; border-radius: 50%; font-size: 16px; cursor: pointer; }
         
+        /* Cart-ul acum se aliniază pe toată lățimea ecranului */
         .floating-cart {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-            width: calc(100% - 40px); max-width: 410px; background: var(--antracit);
+            position: fixed; bottom: 20px; left: 20px; right: 20px;
+            background: var(--antracit);
             color: white; padding: 16px; border-radius: 16px; text-align: center; text-decoration: none; z-index: 999; font-weight: 600;
         }
 
         /* Modal Observații */
         #modal-obs { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.7); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-content { background: white; padding: 20px; border-radius: 15px; width: 85%; max-width: 300px; }
+        .modal-content { background: white; padding: 20px; border-radius: 15px; width: 90%; max-width: 400px; }
         textarea { width: 100%; height: 80px; margin: 10px 0; border: 1px solid #ccc; border-radius: 8px; padding: 8px; box-sizing: border-box; font-family: inherit; }
     </style>
 </head>

@@ -1,70 +1,83 @@
-/* Resetare generală - ștergem marginile implicite ale browserului */
+/* --- 1. RESETARE ȘI CONFIGURARE --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Fundalul paginii (pe laptop va fi un gri-crem deschis în spatele aplicației) */
 body {
-    background-color: #EFECE6;
+    background-color: #EBEBEB;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
 }
 
-/* CONTAINERUL RESPONSIVE (Telefon vs Laptop) */
+/* --- 2. CONTAINERUL PRINCIPAL --- */
 .app-container {
     width: 100%;
-    max-width: 450px; /* Blochează lățimea pe laptop ca să simuleze un telefon */
-    background-color: #FDFBF7; /* Albul-crem din pozele tale */
+    max-width: 450px; /* Aspect mobil */
+    background-color: #FFFFFF;
     min-height: 100vh;
-    padding: 20px;
     display: flex;
     flex-direction: column;
-    position: relative;
+    margin: 0 auto;
 }
 
-/* Stiluri specifice pentru ecrane mari (Laptop/PC) */
-@media (min-width: 451px) {
-    body {
-        align-items: center; /* Centrează „telefonul” pe mijlocul ecranului de laptop */
-    }
+/* --- 3. REGLAJE DESKTOP (Peste 1024px) --- */
+@media (min-width: 1024px) {
     .app-container {
-        min-height: 85vh;
-        border-radius: 30px; /* Îi face colțurile rotunjite ca un ecran de smartphone */
-        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.08); /* Adaugă o umbră fină în jur */
-        margin: 20px 0;
+        max-width: 1200px; /* Pagina se lățește pe desktop */
+        margin-top: 40px;
+        border-radius: 30px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        min-height: auto;
     }
 }
 
-/* --- Elemente reutilizabile pentru ecrane --- */
-.brand-title {
-    color: #A71D1D; /* Roșul-burgund specific Lumia Stradale */
-    text-align: center;
-    font-size: 28px;
-    margin: 30px 0;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+/* --- 4. REGLAJ POZĂ (Fără tăiere) --- */
+.hero-image {
+    display: block;
+    width: 100%;           /* Se adaptează mereu */
+    max-width: 700px;      /* Poza nu va fi mai lată de 700px */
+    height: auto;          /* Păstrează proporțiile naturale */
+    margin: 30px auto;     /* Centrare perfectă */
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-/* Butonul general stilizat */
-.btn-main {
-    width: 100%;
-    background-color: #A71D1D;
-    color: white;
+/* --- 5. BUTOANE --- */
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 0 20px 20px 20px;
+}
+
+@media (min-width: 1024px) {
+    .action-buttons {
+        flex-direction: row;
+        justify-content: center;
+        gap: 30px;
+    }
+    .btn { width: 300px; }
+}
+
+.btn {
+    padding: 18px;
+    border-radius: 12px;
     border: none;
-    padding: 16px;
-    border-radius: 14px;
-    font-size: 16px;
-    font-weight: bold;
+    font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
 }
 
-.btn-main:hover {
-    background-color: #861616;
-}
+.btn-call { background: #1A1A1A; }
+.btn-menu { background: #B01E22; }
+
+/* --- 6. HEADER --- */
+header { padding: 30px; text-align: center; }
+.brand-title { font-size: 32px; color: #B01E22; margin-bottom: 10px; }

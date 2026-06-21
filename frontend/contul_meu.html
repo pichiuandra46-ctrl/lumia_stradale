@@ -15,67 +15,45 @@
 
         body { 
             font-family: 'Poppins', sans-serif; 
-            background-color: #f0f0f0; 
+            background-color: var(--fundal); 
             margin: 0; 
-            display: flex;
-            justify-content: center;
+            padding: 0;
+            width: 100%;
         }
 
+        /* Containerul ocupă 100% din lățime */
         .app-container {
             width: 100%;
-            max-width: 450px;
-            background-color: var(--fundal);
             min-height: 100vh;
-            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            background-color: var(--fundal);
         }
 
         .profile-header {
             background-color: var(--rosu-lumia);
-            padding: 20px;
+            padding: 20px 5%;
             display: flex;
             align-items: center;
             gap: 15px;
             color: white;
             border-radius: 0 0 20px 20px;
-            position: relative;
         }
 
-        .nav-back {
-            color: white;
-            text-decoration: none;
-            font-size: 22px;
-            margin-right: 10px;
-        }
+        .nav-back { color: white; text-decoration: none; font-size: 22px; margin-right: 10px; }
 
         .profile-pic {
-            width: 50px;
-            height: 50px;
+            width: 50px; height: 50px;
             background: rgba(255,255,255,0.2);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            border: 1px solid rgba(255,255,255,0.4);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; border: 1px solid rgba(255,255,255,0.4);
         }
 
-        .header-info h2 { 
-            margin: 0; 
-            font-size: 18px; 
-            font-family: 'Playfair Display', serif; 
-        }
-        
-        .header-info p { 
-            margin: 0; 
-            font-size: 11px; 
-            opacity: 0.8; 
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+        .header-info h2 { margin: 0; font-size: 18px; font-family: 'Playfair Display', serif; }
+        .header-info p { margin: 0; font-size: 11px; opacity: 0.8; text-transform: uppercase; }
 
         .loyalty-card {
             background: var(--antracit);
-            margin: 15px;
+            margin: 15px 5%;
             padding: 15px 20px;
             border-radius: 18px;
             color: white;
@@ -88,22 +66,17 @@
         .points-box span { font-size: 10px; color: #aaa; text-transform: uppercase; }
         .points-box b { display: block; font-size: 18px; color: #C5A059; }
 
-        .menu-section { padding: 10px 15px; }
+        .menu-section { padding: 10px 5%; }
 
         .menu-group {
             background: white;
             border-radius: 18px;
             margin-bottom: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
             border: 1px solid #eee;
             overflow: hidden;
         }
 
-        .ai-item {
-            background: #f0f4ff; 
-            border: 1px solid #d0e0ff !important;
-        }
-        
+        .ai-item { background: #f0f4ff; border: 1px solid #d0e0ff !important; }
         .ai-icon {
             background: var(--ai-gradient);
             -webkit-background-clip: text;
@@ -112,42 +85,25 @@
         }
 
         .menu-item {
-            display: flex;
-            align-items: center;
-            padding: 16px 18px;
-            text-decoration: none;
-            color: var(--antracit);
+            display: flex; align-items: center; padding: 16px 18px;
+            text-decoration: none; color: var(--antracit);
             border-bottom: 1px solid #f9f9f9;
-            transition: background 0.3s;
         }
-
-        .menu-item:last-child { border-bottom: none; }
-        .menu-item:active { background: #fcfcfc; }
 
         .menu-icon { font-size: 18px; margin-right: 12px; }
         .menu-text { flex-grow: 1; font-size: 13px; font-weight: 500; }
         .arrow { color: #ddd; font-size: 16px; }
 
         .badge-new {
-            background: var(--ai-gradient);
-            color: white;
-            font-size: 8px;
-            padding: 2px 6px;
-            border-radius: 10px;
-            margin-left: 8px;
-            text-transform: uppercase;
-            font-weight: 700;
+            background: var(--ai-gradient); color: white;
+            font-size: 8px; padding: 2px 6px; border-radius: 10px;
+            margin-left: 8px; text-transform: uppercase; font-weight: 700;
         }
 
         .logout-btn {
-            display: block;
-            text-align: center;
-            margin-top: 25px;
-            color: #999;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
+            display: block; text-align: center; margin-top: 25px;
+            color: #999; text-decoration: none; font-size: 12px;
+            font-weight: 600; cursor: pointer;
         }
     </style>
 </head>
@@ -158,7 +114,6 @@
         <a href="index.html" class="nav-back">←</a>
         <div class="profile-pic">👤</div>
         <div class="header-info">
-            <!-- CORECTAT DINAMIC -->
             <h2 id="dyn-profile-name">Client Lumia</h2>
             <p>Membru Lumia Stradale din 2026</p>
         </div>
@@ -167,7 +122,6 @@
     <div class="loyalty-card">
         <div class="points-box">
             <span>Puncte acumulate</span>
-            <!-- CORECTAT DINAMIC -->
             <b id="dyn-profile-points">0 puncte</b>
         </div>
         <div style="font-size: 20px;">🍕</div>
@@ -213,7 +167,6 @@
 </div>
 
 <script>
-    // Se executa automat cand se incarca ecranul
     window.onload = () => {
         const user = JSON.parse(localStorage.getItem('user'));
         if (user) {

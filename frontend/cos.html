@@ -7,23 +7,36 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root { --rosu-lumia: #B71C1C; --antracit: #121212; --crem-hartie: #FDFBF7; }
-        body { font-family: 'Poppins', sans-serif; background: #f0f0f0; margin: 0; display: flex; justify-content: center; }
-        .app-container { width: 100%; max-width: 450px; background: var(--crem-hartie); min-height: 100vh; padding: 20px; box-sizing: border-box; }
-        h2 { font-family: 'Playfair Display', serif; text-align: center; color: var(--antracit); }
+        
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: #f0f0f0; 
+            margin: 0; 
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .app-container { 
+            width: 100%; 
+            background: var(--crem-hartie); 
+            min-height: 100vh; 
+            padding: 20px; 
+            box-sizing: border-box; 
+        }
+
+        h2 { font-family: 'Playfair Display', serif; text-align: center; color: var(--antracit); margin-top: 0; }
         .back-link { text-decoration: none; color: var(--rosu-lumia); font-size: 14px; font-weight: 600; display: inline-block; margin-bottom: 20px; }
         
-        /* Stil produse */
         .cart-item { background: white; padding: 15px; border-radius: 15px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #eee; }
         .cart-item-info b { font-size: 16px; display: block; }
         .cart-item-info small { color: #888; font-size: 12px; }
         .btn-remove { background: #ffebee; color: #c62828; border: none; padding: 5px 10px; border-radius: 8px; font-size: 10px; cursor: pointer; margin-top: 5px; }
 
-        /* Stil Checkout */
         .checkout-box { background: white; padding: 20px; border-radius: 20px; margin-top: 25px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); }
         .time-option-container { background: #f9f9f9; padding: 12px; border-radius: 12px; margin: 15px 0; display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 12px; font-weight: 600; text-transform: uppercase; }
         .time-option-container input { width: 18px; height: 18px; accent-color: var(--rosu-lumia); }
         select { width: 100%; padding: 12px; margin: 8px 0 20px; border-radius: 12px; border: 1px solid #ddd; background: #fcfcfc; }
-        .btn-order { background: var(--rosu-lumia); color: white; width: 100%; border: none; padding: 18px; border-radius: 15px; font-weight: bold; cursor: pointer; }
+        .btn-order { background: var(--rosu-lumia); color: white; width: 100%; border: none; padding: 18px; border-radius: 15px; font-weight: bold; cursor: pointer; font-size: 16px; }
     </style>
 </head>
 <body>
@@ -36,7 +49,7 @@
 
         <div id="checkout-area" style="display:none;">
             <div class="checkout-box">
-                <h4>Total: <span id="total-price" style="color: var(--rosu-lumia);">0</span> lei</h4>
+                <h4 style="margin-top:0;">Total: <span id="total-price" style="color: var(--rosu-lumia);">0</span> lei</h4>
                 
                 <label class="time-option-container">
                     <input type="checkbox" id="enable-time" onchange="toggleTimeSelector()">
@@ -112,12 +125,37 @@
             const time = document.getElementById('pickup-time').value;
             const method = document.getElementById('payment').value;
             
+            // 1. Preluăm user-ul curent din localStorage
+            let user = JSON.parse(localStorage.getItem('user')) || { name: 'Client', orders: [], points: 0 };
+            if (!user.orders) user.orders = [];
+
+            // 2. Calculăm punctele (valoarea totală a comenzii)
+            const totalValoare = parseInt(document.getElementById('total-price').innerText) || 0;
+
+            // 3. Creăm obiectul noii comenzi
+            const nouaComanda = {
+                id: Math.floor(1000 + Math.random() * 9000),
+                data: new Date().toLocaleDateString(),
+                produse: cart.map(p => p.name),
+                total: totalValoare + " lei",
+                statusText: "Preluată"
+            };
+
+            // 4. Adăugăm comanda în istoric și actualizăm punctele (1 leu = 1 punct)
+            user.orders.push(nouaComanda);
+            user.points = (parseInt(user.points) || 0) + totalValoare;
+
+            // 5. Salvăm utilizatorul actualizat în localStorage
+            localStorage.setItem('user', JSON.stringify(user));
+
             const message = useTime ? 
-                `Comandă primită! 🎉\n\nTe așteptăm la ora ${time} pentru a ridica pizza. Plata: ${method}.` : 
-                `Comandă primită! 🎉\n\nPizza ta va fi gata în aproximativ 20-25 minute. Plata: ${method}.`;
+                `Comandă primită! 🎉\n\nAi câștigat ${totalValoare} puncte!\nTe așteptăm la ora ${time} pentru ridicare.` : 
+                `Comandă primită! 🎉\n\nAi câștigat ${totalValoare} puncte!\nPizza ta va fi gata în ~25 minute.`;
 
             alert(message);
-            localStorage.clear();
+
+            // 6. Curățăm doar coșul, nu și profilul utilizatorului
+            localStorage.removeItem('cosLumia');
             window.location.href = 'index.html';
         }
 
